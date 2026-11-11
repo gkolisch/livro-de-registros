@@ -169,6 +169,37 @@ th { background: var(--panel); color: var(--accent); font-weight: normal; }
 a.wikilink { color: var(--accent); border-bottom: 1px dotted var(--accent); }
 a.wikilink:hover { text-decoration: none; border-bottom-style: solid; }
 .meta { color: var(--muted); font-size: 14px; font-family: var(--mono); }
+.content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+  margin: 18px auto;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #000;
+  cursor: zoom-in;
+}
+.lb {
+  position: fixed;
+  inset: 0;
+  background: rgba(4,4,7,.93);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: zoom-out;
+  padding: 24px;
+}
+.lb.open { display: flex; }
+.lb img {
+  max-width: 94vw;
+  max-height: 94vh;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
+}
 
 .gate { margin: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 20%, #1a1a23 0%, #0d0d11 60%); }
 .gate-card {
@@ -265,11 +296,19 @@ def build_page(title, nav_html, content_html, crumb):
     <div class="foot">Este é um relato contado sobre um mundo paralelo. Considere-o uma obra de ficção.</div>
   </div>
 </main>
+<div class="lb" id="lb" onclick="closeLb()"><img id="lb-img" alt=""></div>
 <script>
 var AUTH_KEY = '{AUTH_KEY}';
 var AUTH_HASH = '{PASSWORD_HASH}';
 if (localStorage.getItem(AUTH_KEY) !== AUTH_HASH) {{ location.replace('index.html'); }}
 function logout() {{ localStorage.removeItem(AUTH_KEY); location.href = 'index.html'; }}
+function openLb(src) {{ document.getElementById('lb-img').src = src; document.getElementById('lb').classList.add('open'); }}
+function closeLb() {{ document.getElementById('lb').classList.remove('open'); }}
+document.addEventListener('DOMContentLoaded', function() {{
+  document.querySelectorAll('.content img').forEach(function(img) {{
+    img.addEventListener('click', function() {{ openLb(img.src); }});
+  }});
+}});
 </script>
 </body>
 </html>
@@ -390,8 +429,13 @@ def main():
 
     wiki_re = re.compile(r'\[\[([^\]]+)\]\]')
 
+    import stat
+    def _on_rm_error(func, path, exc_info):
+        os.chmod(path, stat.S_IWRITE)
+        func(path)
+
     if os.path.isdir(SITE):
-        shutil.rmtree(SITE)
+        shutil.rmtree(SITE, onerror=_on_rm_error)
     os.makedirs(SITE)
 
     for n in notes:
