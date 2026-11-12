@@ -8,7 +8,7 @@
 
 Um grupo de pessoas que há milênios luta contra ameaças. O próprio nome do grupo é a ausência de nome: a anonimidade é a sua proteção.
 
-É a organização por trás do [[Catalogo LR|Livro de Registros]] — a estrutura existe há séculos, mantida e transmitida entre gerações.
+É a organização por trás do [[Catalogo LR|Livro de Registros]] — a estrutura existe há séculos, mantida e transmitida entre gerações. Tem mais de 1200 anos.
 
 ---
 

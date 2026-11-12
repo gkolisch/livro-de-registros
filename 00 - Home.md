@@ -1,4 +1,5 @@
 # O Livro de Registros
+![[Pasted image 20261111142906.png]]
 
 > *"A humanidade vive à margem de verdades que desconhece. Enquanto forças incompreensíveis ameaçam a realidade, conflitos silenciosos são travados por aqueles que sabem o que existe além dela."*
 
